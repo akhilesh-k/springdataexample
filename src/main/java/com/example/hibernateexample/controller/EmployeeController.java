@@ -29,4 +29,8 @@ public class EmployeeController {
 		return employeeService.updateEmployeeById(id,employeeRequestDTO);
 	}
 	//DELETE 	/employee{id}
+	@DeleteMapping("/{id}")
+	public EmployeeResponseDTO deleteEmployeeById(@PathVariable("id")Long id){
+		return employeeService.deleteEmployeeById(id);
+	}
 }

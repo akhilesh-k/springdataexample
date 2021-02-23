@@ -64,4 +64,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 		return null;
 	}
+	@Override
+	public EmployeeResponseDTO deleteEmployeeById(Long id){
+		Optional<Employee>employeeOptional=employeeRepository.findById(id);
+		if(employeeOptional.isPresent()){
+
+			//copy from employee to response dto
+
+
+			EmployeeResponseDTO responseDTO=new EmployeeResponseDTO();
+			BeanUtils.copyProperties(employeeOptional.get(),responseDTO);
+			employeeRepository.deleteById(id);
+			return responseDTO;
+		}
+		return null;
+	}
 }
