@@ -19,10 +19,14 @@ public class EmployeeController {
 		return employeeService.createEmployee(employeeRequestDTO);
 	}
 	//GET 		/employee/{id}
-	@GetMapping
+	@GetMapping("/{id}")
 	public EmployeeResponseDTO getEmployeeById(@PathVariable("id")Long id){
 		return employeeService.getEmployeeById(id);
 	}
 	//PUT 		/employee/{id}
+	@PutMapping("/{id}")
+	public EmployeeResponseDTO updateEmployee(@PathVariable("id")Long id,@RequestBody EmployeeRequestDTO employeeRequestDTO){
+		return employeeService.updateEmployeeById(id,employeeRequestDTO);
+	}
 	//DELETE 	/employee{id}
 }
