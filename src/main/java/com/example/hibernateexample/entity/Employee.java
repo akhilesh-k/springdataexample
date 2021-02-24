@@ -1,13 +1,11 @@
 package com.example.hibernateexample.entity;
 
+import com.example.hibernateexample.service.DepartmentService;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -18,5 +16,6 @@ public class Employee {
 	@GeneratedValue(generator = "employee_id_seq",strategy = GenerationType.AUTO)
 	private long id;
 	private String name;
-	private String departmentName;
+	@ManyToOne()
+	private Department department;
 }

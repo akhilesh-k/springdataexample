@@ -2,7 +2,9 @@ package com.example.hibernateexample.service.impl;
 
 import com.example.hibernateexample.dto.EmployeeRequestDTO;
 import com.example.hibernateexample.dto.EmployeeResponseDTO;
+import com.example.hibernateexample.entity.Department;
 import com.example.hibernateexample.entity.Employee;
+import com.example.hibernateexample.repository.DepartmentRepository;
 import com.example.hibernateexample.repository.EmployeeRepository;
 import com.example.hibernateexample.service.EmployeeService;
 import org.springframework.beans.BeanUtils;
@@ -17,6 +19,8 @@ import java.util.Optional;
 public class EmployeeServiceImpl implements EmployeeService {
 	@Autowired
 	private EmployeeRepository employeeRepository;
+	@Autowired
+	private DepartmentRepository departmentRepository;
 
 	@Override
 	public EmployeeResponseDTO createEmployee(EmployeeRequestDTO employeeRequestDTO){
@@ -51,7 +55,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 			//copy from employee
 			Employee employeeFromDb=employeeOptional.get();
 			employeeFromDb.setName(employeeRequestDTO.getName());
-			employeeFromDb.setDepartmentName(employeeRequestDTO.getDepartmentName());
+
+			Optional<Department>departmentOptional=departmentRepository.findById(employeeRequestDTO.getDepartment().getId());
+			if(departmentOptional.isPresent()){
+				employeeFromDb.setDepartment(departmentOptional.get());
+			}
+
 
 			//save to db
 			Employee savedEmployee=employeeRepository.save(employeeFromDb);
