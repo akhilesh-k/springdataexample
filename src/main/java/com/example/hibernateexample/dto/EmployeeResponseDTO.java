@@ -10,6 +10,7 @@ public class EmployeeResponseDTO {
 
 	private long id;
 	private String name;
+	private String code;
 	private DepartmentResponseDTO department;
 	public void setDepartmentFromEntity(Department departmentEntity){
 		DepartmentResponseDTO departmentResponseDTO = new DepartmentResponseDTO();

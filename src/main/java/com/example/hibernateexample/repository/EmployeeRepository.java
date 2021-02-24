@@ -27,4 +27,5 @@ public interface EmployeeRepository extends CrudRepository<Employee, Long> {
 			nativeQuery = true)
 	List<Employee> getEmployeeListByNativeQuery(Long departmentId);
 
+	List<Employee> findByDepartment_Id(Long departmentId);
 }

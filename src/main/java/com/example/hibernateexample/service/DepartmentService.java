@@ -7,4 +7,5 @@ import com.example.hibernateexample.entity.Department;
 public interface DepartmentService {
 	DepartmentResponseDTO createDepartment(DepartmentRequestDTO departmentRequestDTO);
 	Department getDepartmentById(Long Id);
+	DepartmentResponseDTO updateDepartment(Long departmentId,DepartmentRequestDTO departmentRequestDTO);
 }
