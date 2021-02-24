@@ -6,6 +6,7 @@ import com.example.hibernateexample.entity.Department;
 import com.example.hibernateexample.entity.Employee;
 import com.example.hibernateexample.repository.DepartmentRepository;
 import com.example.hibernateexample.repository.EmployeeRepository;
+import com.example.hibernateexample.service.DepartmentService;
 import com.example.hibernateexample.service.EmployeeService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.security.PublicKey;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -60,6 +63,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 			if(departmentOptional.isPresent()){
 				employeeFromDb.setDepartment(departmentOptional.get());
 			}
+			else {
+				Department department=new Department();
+				department.setName(employeeRequestDTO.getDepartment().getName());
+				employeeFromDb.setDepartment(department);
+			}
 
 
 			//save to db
@@ -85,6 +93,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 			BeanUtils.copyProperties(employeeOptional.get(),responseDTO);
 			employeeRepository.deleteById(id);
 			return responseDTO;
+		}
+		return null;
+	}
+	@Override
+	public List<EmployeeResponseDTO>getEmployeeListByDepartment(Long departmentId){
+		Department department=departmentRepository.findById(departmentId).get();
+		List<Employee> employeeList=employeeRepository.findByDepartment(department);
+		List<EmployeeResponseDTO>employeeResponseDTOList=new ArrayList<>();
+		for(Employee employee:employeeList){
+			EmployeeResponseDTO responseDTO=new EmployeeResponseDTO();
+			BeanUtils.copyProperties(employee,responseDTO);
+			responseDTO.setDepartmentFromEntity(employee.getDepartment());
+			employeeResponseDTOList.add(responseDTO);
 		}
 		return null;
 	}

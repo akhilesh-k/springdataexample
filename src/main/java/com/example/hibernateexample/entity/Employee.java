@@ -1,9 +1,11 @@
 package com.example.hibernateexample.entity;
 
 import com.example.hibernateexample.service.DepartmentService;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
@@ -16,6 +18,7 @@ public class Employee {
 	@GeneratedValue(generator = "employee_id_seq",strategy = GenerationType.AUTO)
 	private long id;
 	private String name;
-	@ManyToOne()
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JsonBackReference
 	private Department department;
 }
